@@ -1,0 +1,97 @@
+// script.js
+
+let api = "https://api.github.com/users/";
+
+let fetch = document.createElement("script"); // for loading external library like axios
+fetch.src = `https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.0/axios.min.js`;// axios library source link
+
+fetch.integrity = `ha512-DZqqY3PiOvTP9HkjIWgjO6ouCbq+dxqWoJZ/Q+zPYNHmlnI2dQnbJ5bxAHpAMw+LXRm4D72EIRXzvcHQtE8/VQ==`; // for checking the browser if the file is alerted it will block being loaded
+
+fetch.crossOrigin = "anonymous"; //loading resources from another domain
+
+document.head.appendChild(fetch);
+
+let main = document.getElementById("main");
+let inputForm = document.getElementById("userInput");
+let inputBox = document.getElementById("inputBox");
+
+const userGetFunction = (name) => { // user name that is our github name
+  axios(api + name)  // git api + our username
+    .then((response) => {
+      // if the response is successful i.e API request is successful
+      userCard(response.data); // the data include (e.g., name, avatar, followers)
+      repoGetFunction(name); //to fetch and display the user's repositories.
+    })
+    .catch((err) => {
+      //Executes if the API request fails (e.g., the user doesn't exist or there is a network issue).
+      if (err.response.status == 404) {
+        errorFunction("No profile with this username");
+      }
+    });
+};
+
+const repoGetFunction = (name) => {
+  //Fetches the user's repositories from the GitHub API
+  axios(api + name + "/repos?sort=created") //to sort repositories by creation date (newest first).
+    .then((response) => {
+      repoCardFunction(response.data);
+    })
+    .catch((err) => {
+      errorFunction("Problem fetching repos");
+    });
+};
+
+const userCard = (user) => {
+  let id = user.name || user.login; //user.name: Represents the user's display name (if available).
+  //user.login: Represents the user's GitHub username (used as a fallback).
+  let info = user.bio ? `<p>${user.bio}</p>` : ""; //Contains a paragraph (<p>) with the user's bio, or an empty string if the bio is not available.
+  let cardElement = `
+<div class="card">
+<div>
+<img src="${user.avatar_url}" 
+     alt="${user.name}" 
+     class="avatar">
+</div>
+
+<div class="user-info">
+<h2>${id}</h2>${info}<ul>
+<li>${user.followers} <strong>Followers</strong></li>
+<li>${user.following} <strong>Following</strong></li>
+<li>${user.public_repos} <strong>Repos</strong></li>
+</ul>
+<div id="repos"></div>
+</div>
+</div>`;
+  main.innerHTML = cardElement;
+};
+
+const errorFunction = (error) => {
+  let cardHTML = `
+<div class="card">
+<h1>${error}</h1>
+</div>`;
+  main.innerHTML = cardHTML;
+};
+
+const repoCardFunction = (repos) => {
+  let reposElement = document.getElementById("repos");
+  for (let i = 0; i < 5 && i < repos.length; i++) {
+    let repo = repos[i];
+    let repoEl = document.createElement("a");
+    repoEl.classList.add("repo");
+    repoEl.href = repo.html_url;
+    repoEl.target = "_blank"; //Ensures the link opens in a new browser tab.
+    repoEl.innerText = repo.name;
+    reposElement.appendChild(repoEl);
+  }
+};
+inputForm.addEventListener("submit", (e) => {
+  // Listens for the form's submit event, which occurs when the user presses the "Enter"
+  //Callback Function: Executes the provided function when the event occurs. The event object (e) is passed as an argument.
+  e.preventDefault();
+  let user = inputBox.value;
+  if (user) {
+    userGetFunction(user);
+    inputBox.value = "";
+  }
+});

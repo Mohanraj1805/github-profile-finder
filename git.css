@@ -1,0 +1,161 @@
+@import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap");
+
+/* Reset and Box Model */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* Body Styling */
+body {
+    font-family: 'Orbitron', sans-serif;
+    background: linear-gradient(135deg, #0f2027, #2c5364); /* Electric Blue to Neon Purple */
+    color: #e0e0e0; /* Muted White */
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    overflow: hidden;
+}
+
+/* Animated Background Particles */
+body::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, rgba(255, 0, 127, 0.15), rgba(0, 245, 255, 0.05));
+    mix-blend-mode: screen;
+    z-index: -1;
+}
+
+/* Form Styling */
+form {
+    margin: auto;
+    max-width: 400px;
+    text-align: center;
+    background: rgba(28, 28, 28, 0.9); /* Dark Base */
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(10px);
+    transition: transform 0.3s ease-in-out;
+}
+
+form:hover {
+    transform: scale(1.05);
+}
+
+h1 {
+    font-size: 2.5rem;
+    color: #ff007f; /* Cyber Glow Pink */
+    text-shadow: 0 0 10px rgba(255, 0, 127, 0.8), 0 0 20px rgba(255, 0, 127, 0.6);
+}
+
+.inputForm input {
+    width: 80%;
+    background: #1c1c1c; /* Dark Base */
+    border: 2px solid #00f5ff; /* Electric Cyan */
+    border-radius: 5px;
+    padding: 0.8rem;
+    font-size: 1rem;
+    color: #e0e0e0; /* Muted White */
+    margin-top: 1rem;
+    transition: box-shadow 0.3s ease;
+}
+
+.inputForm input:focus {
+    outline: none;
+    box-shadow: 0 4px 15px rgba(0, 245, 255, 0.5); /* Cyan glow */
+}
+
+/* Card Styling */
+.card {
+    max-width: 500px;
+    background: rgba(28, 28, 28, 0.8); /* Dark Base */
+    border-radius: 15px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+    display: flex;
+    flex-direction: column;
+    padding: 2rem;
+    margin: 1rem auto;
+    align-items: center;
+    backdrop-filter: blur(10px);
+}
+
+.avatar {
+    border-radius: 50%;
+    border: 4px solid #ff007f; /* Cyber Glow Pink */
+    width: 120px;
+    height: 120px;
+    margin-bottom: 1rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.avatar:hover {
+    transform: scale(1.1);
+    box-shadow: 0 8px 25px rgba(255, 0, 127, 0.6); /* Pink glow */
+}
+
+.user-info {
+    text-align: center;
+}
+
+.user-info h2 {
+    font-size: 1.8rem;
+    color: #00f5ff; /* Electric Cyan */
+    margin-bottom: 0.5rem;
+    text-shadow: 0 0 10px rgba(0, 245, 255, 0.6);
+}
+
+.user-info ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    justify-content: space-around;
+    margin: 1rem 0;
+}
+
+.user-info ul li {
+    font-size: 1rem;
+}
+
+.user-info ul li strong {
+    color: #ff007f; /* Cyber Glow Pink */
+}
+
+.repo {
+    background: linear-gradient(90deg, #2c3e50, #4ca1af); /* Subtle Blue-Grey to Soft Blue */
+    color: #e0e0e0; /* Muted White */
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    margin: 0.3rem;
+    display: inline-block;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.repo:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(76, 161, 175, 0.5); /* Subtle glow */
+}
+
+
+/* Responsive Design */
+@media (max-width: 500px) {
+    form {
+        width: 90%;
+    }
+
+    .card {
+        padding: 1.5rem;
+    }
+
+    .user-info ul {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+}
